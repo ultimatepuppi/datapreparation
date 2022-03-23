@@ -25,6 +25,7 @@ gen_pfs_eta = read_branch('PileUpMix.Eta')
 gen_pfs_phi = read_branch('PileUpMix.Phi')
 gen_pfs_e = read_branch('PileUpMix.E')
 gen_pfs_pid = read_branch('PileUpMix.PID')
+gen_pfs_z = read_branch('PileUpMix.Z')
 gen_pfs_charge = read_branch('PileUpMix.Charge')
 gen_pfs_genvtx = read_branch('PileUpMix.GenVtxIdx')
 gen_pfs_genvtx = gen_pfs_genvtx + 1
@@ -47,6 +48,7 @@ gen_pfs_phi = filter_neutrinos(gen_pfs_phi)
 gen_pfs_e = filter_neutrinos(gen_pfs_e)
 gen_pfs_pid = filter_neutrinos(gen_pfs_pid)
 gen_pfs_charge = filter_neutrinos(gen_pfs_charge)
+gen_pfs_z = filter_neutrinos(gen_pfs_z)
 gen_pfs_genvtx = filter_neutrinos(gen_pfs_genvtx)
 
 # Smearing photon energies
@@ -121,7 +123,7 @@ def one_hot_pid(gen_pfs_pid,gen_pfs_charge,gen_pfs_eta):
 
     return Array(ListOffsetArray64(gen_pfs_pid.layout.offsets, Array(new_pid_arr).layout))
 
-new_gen_pfs_pid = one_hot_pid(gen_pfs_pid,gen_pfs_charge,gen_pfs_eta)
+gen_pfs_pid = one_hot_pid(gen_pfs_pid,gen_pfs_charge,gen_pfs_eta)
 
 
 def disable_charge(gen_pfs_charge,gen_pfs_eta,gen_pfs_genvtx):
@@ -153,7 +155,9 @@ gen_pfs_phi = filter_minpt(gen_pfs_phi)
 gen_pfs_e = filter_minpt(gen_pfs_e)
 gen_pfs_pid = filter_minpt(gen_pfs_pid)
 gen_pfs_charge = filter_minpt(gen_pfs_charge)
+gen_pfs_z = filter_minpt(gen_pfs_z)
 gen_pfs_vtx = filter_minpt(gen_pfs_vtx)
+gen_pfs_z = filter_minpt(gen_pfs_vtx)
 gen_pfs_genvtx = filter_minpt(gen_pfs_genvtx)
 
 
@@ -230,7 +234,8 @@ final_pfs_eta = np.array(ak.fill_none(ak.pad_none(gen_pfs_eta,7000,clip=True),-9
 final_pfs_phi = np.array(ak.fill_none(ak.pad_none(gen_pfs_phi,7000,clip=True),-99,axis=-1))
 final_pfs_e = np.array(ak.fill_none(ak.pad_none(gen_pfs_e,7000,clip=True),-99,axis=-1))
 final_pfs_pid = np.array(ak.fill_none(ak.pad_none(gen_pfs_pid,7000,clip=True),-99,axis=-1))
-final_pfs_charge = np.array(ak.fill_none(ak.pad_none(gen_pfs_pid,7000,clip=True),-99,axis=-1))
+final_pfs_charge = np.array(ak.fill_none(ak.pad_none(gen_pfs_charge,7000,clip=True),-99,axis=-1))
+final_pfs_z = np.array(ak.fill_none(ak.pad_none(gen_pfs_z,7000,clip=True),-99,axis=-1))
 final_pfs_vtx = np.array(ak.fill_none(ak.pad_none(gen_pfs_vtx,7000,clip=True),-99,axis=-1))
 final_pfs_genvtx = np.array(ak.fill_none(ak.pad_none(gen_pfs_genvtx,7000,clip=True),-99,axis=-1))
 
@@ -254,6 +259,8 @@ hf = h5py.File(sys.argv[2], 'w')
 
 hf.create_dataset('pfs', data=final_pfs_features)
 hf.create_dataset('pfs_shape', data=final_pfs_features.shape)
+hf.create_dataset('z', data=final_pfs_z)
+hf.create_dataset('z_shape', data=final_pfs_z.shape)
 hf.create_dataset('edge_start', data=final_pfs_vtx)
 hf.create_dataset('edge_start_shape', data=final_pfs_vtx.shape)
 hf.create_dataset('edge_stop', data=final_vtx_id)
@@ -262,6 +269,8 @@ hf.create_dataset('vtx', data=final_vtx_features)
 hf.create_dataset('vtx_shape', data=final_vtx_features.shape)
 hf.create_dataset('truth', data=final_pfs_genvtx)
 hf.create_dataset('truth_shape', data=final_pfs_genvtx.shape)
+hf.create_dataset('vtx_truthidx', data=final_vtx_id)
+hf.create_dataset('vtx_truthidx_shape', data=final_vtx_id.shape)
 hf.create_dataset('n', data=final_pfs_genvtx.shape[0])
 
 hf.close()
