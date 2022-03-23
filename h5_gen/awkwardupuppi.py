@@ -157,7 +157,6 @@ gen_pfs_pid = filter_minpt(gen_pfs_pid)
 gen_pfs_charge = filter_minpt(gen_pfs_charge)
 gen_pfs_z = filter_minpt(gen_pfs_z)
 gen_pfs_vtx = filter_minpt(gen_pfs_vtx)
-gen_pfs_z = filter_minpt(gen_pfs_vtx)
 gen_pfs_genvtx = filter_minpt(gen_pfs_genvtx)
 
 
@@ -229,15 +228,15 @@ gen_vtx_id = gen_vtx_id[gen_vtx_ndf>0]
 
 
 
-final_pfs_pt = np.array(ak.fill_none(ak.pad_none(gen_pfs_pt,7000,clip=True),-99,axis=-1))
-final_pfs_eta = np.array(ak.fill_none(ak.pad_none(gen_pfs_eta,7000,clip=True),-99,axis=-1))
-final_pfs_phi = np.array(ak.fill_none(ak.pad_none(gen_pfs_phi,7000,clip=True),-99,axis=-1))
-final_pfs_e = np.array(ak.fill_none(ak.pad_none(gen_pfs_e,7000,clip=True),-99,axis=-1))
-final_pfs_pid = np.array(ak.fill_none(ak.pad_none(gen_pfs_pid,7000,clip=True),-99,axis=-1))
-final_pfs_charge = np.array(ak.fill_none(ak.pad_none(gen_pfs_charge,7000,clip=True),-99,axis=-1))
-final_pfs_z = np.array(ak.fill_none(ak.pad_none(gen_pfs_z,7000,clip=True),-99,axis=-1))
-final_pfs_vtx = np.array(ak.fill_none(ak.pad_none(gen_pfs_vtx,7000,clip=True),-99,axis=-1))
-final_pfs_genvtx = np.array(ak.fill_none(ak.pad_none(gen_pfs_genvtx,7000,clip=True),-99,axis=-1))
+final_pfs_pt = np.array(ak.fill_none(ak.pad_none(gen_pfs_pt,7000,clip=True),0,axis=-1))
+final_pfs_eta = np.array(ak.fill_none(ak.pad_none(gen_pfs_eta,7000,clip=True),0,axis=-1))
+final_pfs_phi = np.array(ak.fill_none(ak.pad_none(gen_pfs_phi,7000,clip=True),0,axis=-1))
+final_pfs_e = np.array(ak.fill_none(ak.pad_none(gen_pfs_e,7000,clip=True),0,axis=-1))
+final_pfs_pid = np.array(ak.fill_none(ak.pad_none(gen_pfs_pid,7000,clip=True),0,axis=-1))
+final_pfs_charge = np.array(ak.fill_none(ak.pad_none(gen_pfs_charge,7000,clip=True),0,axis=-1))
+final_pfs_z = np.array(ak.fill_none(ak.pad_none(gen_pfs_z,7000,clip=True),0,axis=-1))
+final_pfs_vtx = np.array(ak.fill_none(ak.pad_none(gen_pfs_vtx,7000,clip=True),0,axis=-1))
+final_pfs_genvtx = np.array(ak.fill_none(ak.pad_none(gen_pfs_genvtx,7000,clip=True),0,axis=-1))
 
 final_pfs_features = np.stack((final_pfs_pt,final_pfs_eta,final_pfs_phi,final_pfs_e,final_pfs_pid,final_pfs_charge),axis=-1)
 
@@ -247,11 +246,11 @@ print(final_pfs_features)
 print(final_pfs_features.shape)
 
 
-final_vtx_x = np.array(ak.fill_none(ak.pad_none(gen_vtx_x,200,clip=True),-99,axis=-1))
-final_vtx_y = np.array(ak.fill_none(ak.pad_none(gen_vtx_y,200,clip=True),-99,axis=-1))
-final_vtx_z = np.array(ak.fill_none(ak.pad_none(gen_vtx_z,200,clip=True),-99,axis=-1))
-final_vtx_ndf = np.array(ak.fill_none(ak.pad_none(gen_vtx_ndf,200,clip=True),-99,axis=-1))
-final_vtx_id = np.array(ak.fill_none(ak.pad_none(gen_vtx_id,200,clip=True),-99,axis=-1))
+final_vtx_x = np.array(ak.fill_none(ak.pad_none(gen_vtx_x,200,clip=True),0,axis=-1))
+final_vtx_y = np.array(ak.fill_none(ak.pad_none(gen_vtx_y,200,clip=True),0,axis=-1))
+final_vtx_z = np.array(ak.fill_none(ak.pad_none(gen_vtx_z,200,clip=True),0,axis=-1))
+final_vtx_ndf = np.array(ak.fill_none(ak.pad_none(gen_vtx_ndf,200,clip=True),0,axis=-1))
+final_vtx_id = np.array(ak.fill_none(ak.pad_none(gen_vtx_id,200,clip=True),0,axis=-1))
 
 final_vtx_features = np.stack((final_vtx_x,final_vtx_y,final_vtx_z,final_vtx_ndf),axis=-1)
 
